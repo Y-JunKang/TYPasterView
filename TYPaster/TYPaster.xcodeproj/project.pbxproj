@@ -1,0 +1,351 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		EE37E921212C728700730024 /* TYPasterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE37E91B212C728700730024 /* TYPasterManager.m */; };
+		EE37E922212C728700730024 /* TYPasterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91C212C728700730024 /* TYPasterView+Private.h */; };
+		EE37E923212C728700730024 /* TYPasterResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE37E91D212C728700730024 /* TYPasterResource.bundle */; };
+		EE37E924212C728700730024 /* TYPasterView.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91E212C728700730024 /* TYPasterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EE37E925212C728700730024 /* TYPasterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91F212C728700730024 /* TYPasterManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		EE37E926212C728700730024 /* TYPasterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE37E920212C728700730024 /* TYPasterView.m */; };
+		EEF8FA222116B49800D9DDB8 /* TYPaster.h in Headers */ = {isa = PBXBuildFile; fileRef = EEF8FA202116B49800D9DDB8 /* TYPaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		EE37E91B212C728700730024 /* TYPasterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYPasterManager.m; sourceTree = "<group>"; };
+		EE37E91C212C728700730024 /* TYPasterView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TYPasterView+Private.h"; sourceTree = "<group>"; };
+		EE37E91D212C728700730024 /* TYPasterResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TYPasterResource.bundle; sourceTree = "<group>"; };
+		EE37E91E212C728700730024 /* TYPasterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYPasterView.h; sourceTree = "<group>"; };
+		EE37E91F212C728700730024 /* TYPasterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYPasterManager.h; sourceTree = "<group>"; };
+		EE37E920212C728700730024 /* TYPasterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYPasterView.m; sourceTree = "<group>"; };
+		EEF8FA1D2116B49800D9DDB8 /* TYPaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TYPaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EEF8FA202116B49800D9DDB8 /* TYPaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYPaster.h; sourceTree = "<group>"; };
+		EEF8FA212116B49800D9DDB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		EEF8FA192116B49800D9DDB8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		EEF8FA132116B49800D9DDB8 = {
+			isa = PBXGroup;
+			children = (
+				EEF8FA1F2116B49800D9DDB8 /* TYPaster */,
+				EEF8FA1E2116B49800D9DDB8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		EEF8FA1E2116B49800D9DDB8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				EEF8FA1D2116B49800D9DDB8 /* TYPaster.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		EEF8FA1F2116B49800D9DDB8 /* TYPaster */ = {
+			isa = PBXGroup;
+			children = (
+				EE37E91F212C728700730024 /* TYPasterManager.h */,
+				EE37E91B212C728700730024 /* TYPasterManager.m */,
+				EE37E91D212C728700730024 /* TYPasterResource.bundle */,
+				EE37E91E212C728700730024 /* TYPasterView.h */,
+				EE37E920212C728700730024 /* TYPasterView.m */,
+				EE37E91C212C728700730024 /* TYPasterView+Private.h */,
+				EEF8FA202116B49800D9DDB8 /* TYPaster.h */,
+				EEF8FA212116B49800D9DDB8 /* Info.plist */,
+			);
+			path = TYPaster;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		EEF8FA1A2116B49800D9DDB8 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37E924212C728700730024 /* TYPasterView.h in Headers */,
+				EEF8FA222116B49800D9DDB8 /* TYPaster.h in Headers */,
+				EE37E925212C728700730024 /* TYPasterManager.h in Headers */,
+				EE37E922212C728700730024 /* TYPasterView+Private.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		EEF8FA1C2116B49800D9DDB8 /* TYPaster */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = EEF8FA252116B49800D9DDB8 /* Build configuration list for PBXNativeTarget "TYPaster" */;
+			buildPhases = (
+				EEF8FA182116B49800D9DDB8 /* Sources */,
+				EEF8FA192116B49800D9DDB8 /* Frameworks */,
+				EEF8FA1A2116B49800D9DDB8 /* Headers */,
+				EEF8FA1B2116B49800D9DDB8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = TYPaster;
+			productName = TYPaster;
+			productReference = EEF8FA1D2116B49800D9DDB8 /* TYPaster.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		EEF8FA142116B49800D9DDB8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0940;
+				ORGANIZATIONNAME = "应俊康";
+				TargetAttributes = {
+					EEF8FA1C2116B49800D9DDB8 = {
+						CreatedOnToolsVersion = 9.4;
+					};
+				};
+			};
+			buildConfigurationList = EEF8FA172116B49800D9DDB8 /* Build configuration list for PBXProject "TYPaster" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = EEF8FA132116B49800D9DDB8;
+			productRefGroup = EEF8FA1E2116B49800D9DDB8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				EEF8FA1C2116B49800D9DDB8 /* TYPaster */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		EEF8FA1B2116B49800D9DDB8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37E923212C728700730024 /* TYPasterResource.bundle in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		EEF8FA182116B49800D9DDB8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				EE37E926212C728700730024 /* TYPasterView.m in Sources */,
+				EE37E921212C728700730024 /* TYPasterManager.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		EEF8FA232116B49800D9DDB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		EEF8FA242116B49800D9DDB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.4;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		EEF8FA262116B49800D9DDB8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = PMTE55QLW7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TYPaster/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = tomy.TYPaster;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		EEF8FA272116B49800D9DDB8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "";
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = PMTE55QLW7;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = TYPaster/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = tomy.TYPaster;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		EEF8FA172116B49800D9DDB8 /* Build configuration list for PBXProject "TYPaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF8FA232116B49800D9DDB8 /* Debug */,
+				EEF8FA242116B49800D9DDB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		EEF8FA252116B49800D9DDB8 /* Build configuration list for PBXNativeTarget "TYPaster" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				EEF8FA262116B49800D9DDB8 /* Debug */,
+				EEF8FA272116B49800D9DDB8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = EEF8FA142116B49800D9DDB8 /* Project object */;
+}
