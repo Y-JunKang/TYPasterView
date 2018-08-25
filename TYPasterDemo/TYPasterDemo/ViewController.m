@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import "TYPasterView.h"
+#import <TYPaster/TYPasterView.h>
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *enableControlsSwitch;

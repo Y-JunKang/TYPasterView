@@ -7,24 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		EE37E921212C728700730024 /* TYPasterManager.m in Sources */ = {isa = PBXBuildFile; fileRef = EE37E91B212C728700730024 /* TYPasterManager.m */; };
-		EE37E922212C728700730024 /* TYPasterView+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91C212C728700730024 /* TYPasterView+Private.h */; };
 		EE37E923212C728700730024 /* TYPasterResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE37E91D212C728700730024 /* TYPasterResource.bundle */; };
 		EE37E924212C728700730024 /* TYPasterView.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91E212C728700730024 /* TYPasterView.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		EE37E925212C728700730024 /* TYPasterManager.h in Headers */ = {isa = PBXBuildFile; fileRef = EE37E91F212C728700730024 /* TYPasterManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		EE37E926212C728700730024 /* TYPasterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE37E920212C728700730024 /* TYPasterView.m */; };
-		EEF8FA222116B49800D9DDB8 /* TYPaster.h in Headers */ = {isa = PBXBuildFile; fileRef = EEF8FA202116B49800D9DDB8 /* TYPaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		EE37E91B212C728700730024 /* TYPasterManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYPasterManager.m; sourceTree = "<group>"; };
-		EE37E91C212C728700730024 /* TYPasterView+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "TYPasterView+Private.h"; sourceTree = "<group>"; };
 		EE37E91D212C728700730024 /* TYPasterResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TYPasterResource.bundle; sourceTree = "<group>"; };
 		EE37E91E212C728700730024 /* TYPasterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYPasterView.h; sourceTree = "<group>"; };
-		EE37E91F212C728700730024 /* TYPasterManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYPasterManager.h; sourceTree = "<group>"; };
 		EE37E920212C728700730024 /* TYPasterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYPasterView.m; sourceTree = "<group>"; };
 		EEF8FA1D2116B49800D9DDB8 /* TYPaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = TYPaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		EEF8FA202116B49800D9DDB8 /* TYPaster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYPaster.h; sourceTree = "<group>"; };
 		EEF8FA212116B49800D9DDB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -58,13 +50,9 @@
 		EEF8FA1F2116B49800D9DDB8 /* TYPaster */ = {
 			isa = PBXGroup;
 			children = (
-				EE37E91F212C728700730024 /* TYPasterManager.h */,
-				EE37E91B212C728700730024 /* TYPasterManager.m */,
 				EE37E91D212C728700730024 /* TYPasterResource.bundle */,
 				EE37E91E212C728700730024 /* TYPasterView.h */,
 				EE37E920212C728700730024 /* TYPasterView.m */,
-				EE37E91C212C728700730024 /* TYPasterView+Private.h */,
-				EEF8FA202116B49800D9DDB8 /* TYPaster.h */,
 				EEF8FA212116B49800D9DDB8 /* Info.plist */,
 			);
 			path = TYPaster;
@@ -78,9 +66,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE37E924212C728700730024 /* TYPasterView.h in Headers */,
-				EEF8FA222116B49800D9DDB8 /* TYPaster.h in Headers */,
-				EE37E925212C728700730024 /* TYPasterManager.h in Headers */,
-				EE37E922212C728700730024 /* TYPasterView+Private.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,7 +138,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				EE37E926212C728700730024 /* TYPasterView.m in Sources */,
-				EE37E921212C728700730024 /* TYPasterManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

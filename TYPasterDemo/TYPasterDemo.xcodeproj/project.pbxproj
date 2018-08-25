@@ -8,18 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		EE37E928213139B600730024 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE37E927213139B600730024 /* Main.storyboard */; };
+		EE37E94D2131603300730024 /* TYPaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE37E94C2131603300730024 /* TYPaster.framework */; };
 		EEF8FA362116B5BF00D9DDB8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */; };
 		EEF8FA392116B5BF00D9DDB8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA382116B5BF00D9DDB8 /* ViewController.m */; };
 		EEF8FA3E2116B5C100D9DDB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEF8FA3D2116B5C100D9DDB8 /* Assets.xcassets */; };
 		EEF8FA412116B5C100D9DDB8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EEF8FA3F2116B5C100D9DDB8 /* LaunchScreen.storyboard */; };
 		EEF8FA442116B5C100D9DDB8 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA432116B5C100D9DDB8 /* main.m */; };
-		EEF8FA4D2116B64B00D9DDB8 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = EEF8FA4C2116B64B00D9DDB8 /* Info.plist */; };
-		EEF8FA502116B67B00D9DDB8 /* TYPasterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA4F2116B67B00D9DDB8 /* TYPasterView.m */; };
-		EEF8FA562116D72500D9DDB8 /* TYPasterResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EEF8FA552116D72500D9DDB8 /* TYPasterResource.bundle */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EE37E927213139B600730024 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		EE37E94C2131603300730024 /* TYPaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TYPaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF8FA312116B5BF00D9DDB8 /* TYPasterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TYPasterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF8FA342116B5BF00D9DDB8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -29,10 +28,6 @@
 		EEF8FA402116B5C100D9DDB8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EEF8FA422116B5C100D9DDB8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EEF8FA432116B5C100D9DDB8 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
-		EEF8FA4C2116B64B00D9DDB8 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EEF8FA4E2116B67B00D9DDB8 /* TYPasterView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TYPasterView.h; sourceTree = "<group>"; };
-		EEF8FA4F2116B67B00D9DDB8 /* TYPasterView.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TYPasterView.m; sourceTree = "<group>"; };
-		EEF8FA552116D72500D9DDB8 /* TYPasterResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TYPasterResource.bundle; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -40,17 +35,27 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE37E94D2131603300730024 /* TYPaster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		EE37E94B2131603300730024 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				EE37E94C2131603300730024 /* TYPaster.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		EEF8FA282116B5BF00D9DDB8 = {
 			isa = PBXGroup;
 			children = (
 				EEF8FA332116B5BF00D9DDB8 /* TYPasterDemo */,
 				EEF8FA322116B5BF00D9DDB8 /* Products */,
+				EE37E94B2131603300730024 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -65,7 +70,6 @@
 		EEF8FA332116B5BF00D9DDB8 /* TYPasterDemo */ = {
 			isa = PBXGroup;
 			children = (
-				EEF8FA4A2116B64B00D9DDB8 /* TYPaster */,
 				EEF8FA342116B5BF00D9DDB8 /* AppDelegate.h */,
 				EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */,
 				EEF8FA372116B5BF00D9DDB8 /* ViewController.h */,
@@ -77,18 +81,6 @@
 				EEF8FA432116B5C100D9DDB8 /* main.m */,
 			);
 			path = TYPasterDemo;
-			sourceTree = "<group>";
-		};
-		EEF8FA4A2116B64B00D9DDB8 /* TYPaster */ = {
-			isa = PBXGroup;
-			children = (
-				EEF8FA4C2116B64B00D9DDB8 /* Info.plist */,
-				EEF8FA4E2116B67B00D9DDB8 /* TYPasterView.h */,
-				EEF8FA4F2116B67B00D9DDB8 /* TYPasterView.m */,
-				EEF8FA552116D72500D9DDB8 /* TYPasterResource.bundle */,
-			);
-			name = TYPaster;
-			path = ../../TYPaster/TYPaster;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -151,8 +143,6 @@
 				EEF8FA412116B5C100D9DDB8 /* LaunchScreen.storyboard in Resources */,
 				EE37E928213139B600730024 /* Main.storyboard in Resources */,
 				EEF8FA3E2116B5C100D9DDB8 /* Assets.xcassets in Resources */,
-				EEF8FA4D2116B64B00D9DDB8 /* Info.plist in Resources */,
-				EEF8FA562116D72500D9DDB8 /* TYPasterResource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -163,7 +153,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EEF8FA502116B67B00D9DDB8 /* TYPasterView.m in Sources */,
 				EEF8FA392116B5BF00D9DDB8 /* ViewController.m in Sources */,
 				EEF8FA442116B5C100D9DDB8 /* main.m in Sources */,
 				EEF8FA362116B5BF00D9DDB8 /* AppDelegate.m in Sources */,
