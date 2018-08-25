@@ -58,6 +58,58 @@
     [[TYPasterManager sharedInstance] clearAll];
 }
 
+- (IBAction)onEnableControlsChanged:(UISwitch *)sender {
+    if(!sender.isOn) {
+        self.enableDeleteControlSwitch.on = NO;
+        self.enableScaleControlSwitch.on = NO;
+        self.enableRotateControlSwitch.on = NO;
+    }
+}
+
+- (IBAction)onEnableDeleteControlChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableControlsSwitch.on = YES;
+    }
+}
+
+- (IBAction)onEnableScaleControlChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableControlsSwitch.on = YES;
+    }
+}
+
+- (IBAction)onEnableRotateControlChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableControlsSwitch.on = YES;
+    }
+}
+
+- (IBAction)onEnableGestureChanged:(UISwitch *)sender {
+    if(!sender.isOn) {
+        self.enableDragSwitch.on = NO;
+        self.enableScaleSwitch.on = NO;
+        self.enableRotateSwitch.on = NO;
+    }
+}
+
+- (IBAction)onEnableDragChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableGestureSwitch.on = YES;
+    }
+}
+
+- (IBAction)onEnableScaleChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableGestureSwitch.on = YES;
+    }
+}
+
+- (IBAction)onEnableRotateChanged:(UISwitch *)sender {
+    if(sender.isOn) {
+        self.enableGestureSwitch.on = YES;
+    }
+}
+
 - (void)setupPasterView:(TYPasterView *)pasterView {
     pasterView.enableControls = self.enableControlsSwitch.isOn;
     pasterView.enableDeleteControl = self.enableDeleteControlSwitch.isOn;
