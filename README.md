@@ -37,8 +37,8 @@ view3.center = CGPointMake(200, 200);
 
 ## 效果
 
-
-
-<p align="center"><img src="screenshot/screenshot1.png" alt="screenshot1" style="width:40%;" align="center"></p>
+<p align="center">
+  <img src="screenshot/screenshot1.png" alt="screenshot1" width="375" height="812">
+</p>
 
 实际效果请运行TYPasterDemo查看。
