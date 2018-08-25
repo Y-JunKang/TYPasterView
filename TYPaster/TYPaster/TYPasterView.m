@@ -1,4 +1,4 @@
-//
+;//
 //  TYPasterView.m
 //  TYPasterDemo
 //
@@ -8,8 +8,6 @@
 
 #import <math.h>
 #import "TYPasterView.h"
-#import "TYPasterManager.h"
-#import "TYPasterView+Private.h"
 
 #define ADD_GESTURE_RECOGNIZER(view,type,selector) \
 [view addGestureRecognizer:[[type alloc]initWithTarget:self \
@@ -27,11 +25,14 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
     CGFloat _scale;
     CGRect _originFrame;
     BOOL _needLayout;
-    NSMutableArray *_controlsArray;
+    NSMutableSet *_controlsSet;
+    NSMutableSet *_borderSet;
+    BOOL _shouldShowControls;
+    BOOL _shouldShowBorders;
+    
 }
 
 @property (nonatomic, weak) id<TYPasterViewDelegate> delegate;
-@property (nonatomic, assign) BOOL shouldShowControls;
 
 //TODO: 内容view从imageView切换UIView，支持其他view
 @property (nonatomic, strong) UIView *contentView;
@@ -41,25 +42,62 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 @property (nonatomic, strong) UIImageView *deleteControl;
 @property (nonatomic, strong) UIView *topLine, *leftLine, *bottomLine, *rightLine;
 
+@property (nonatomic, strong) UITapGestureRecognizer *pasterTapRecognizer;
+@property (nonatomic, strong) UIPanGestureRecognizer *pasterPanRecognizer;
+@property (nonatomic, strong) UIPinchGestureRecognizer *pasterPinchRecognizer;
+@property (nonatomic, strong) UIRotationGestureRecognizer *pasterRotationRecognizer;
 
 @end
 
 @implementation TYPasterView
 
 #pragma mark public interface
-- (instancetype)initWithImage:(UIImage *)image pasterId:(NSString *)pasterId {
+- (instancetype)initWithPasterId:(NSString *)pasterId {
     if(self = [super init]) {
-        _image = image;
         _pasterId = pasterId;
         _scale = 1;
         _controlWidth = 25;
         _borderColor = [UIColor whiteColor];
         _borderWidth = 1;
         _needLayout = YES;
-        _controlsArray = [NSMutableArray array];
+        
         _shouldShowControls = YES;
         
+        _enableControls = YES;
+        _enableDeleteControl = YES;
+        _enableScaleControl = YES;
+        _enableRotateControl = YES;
+        
+        _enableGesture = YES;
+        _enableDrag = YES;
+        _enableScale = YES;
+        _enableRotate = YES;
+        _controlsSet = [NSMutableSet set];
+        _borderSet = [NSMutableSet set];
+
         [self setupGestureRecognizer];
+    }
+    return self;
+}
+
+- (instancetype)initWithImage:(UIImage *)image pasterId:(NSString *)pasterId {
+    if(self = [self initWithPasterId:pasterId]) {
+        _image = image;
+    }
+    return self;
+}
+
+- (instancetype)initWithText:(NSString *)text pasterId:(NSString *)pasterId {
+    if(self = [self initWithPasterId:pasterId]) {
+        _text = text;
+    }
+    return self;
+}
+
+- (instancetype)initWithCustomeView:(UIView *)customeView pasterId:(NSString *)pasterId {
+    if(self = [self initWithPasterId:pasterId]) {
+        _customeView = customeView;
+        _pasterId = pasterId;
     }
     return self;
 }
@@ -71,9 +109,14 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         
         // setup contentView
         [self addSubview:self.contentView];
+        [_controlsSet addObjectsFromArray:@[self.deleteControl,self.rotateControl,self.scaleControl]];
+        [_borderSet addObjectsFromArray:@[self.leftLine,self.topLine,self.rightLine,self.bottomLine]];
         
-        [_controlsArray addObjectsFromArray:@[self.topLine,self.rightLine,self.bottomLine,self.leftLine,
-                                              self.deleteControl,self.rotateControl,self.scaleControl]];
+        if(!_enableControls) [_controlsSet removeAllObjects];
+        if(!_enableDeleteControl) [_controlsSet removeObject:self.deleteControl];
+        if(!_enableScaleControl) [_controlsSet removeObject:self.scaleControl];
+        if(!_enableRotateControl) [_controlsSet removeObject:self.rotateControl];
+        
         [self addControls];
         
         _needLayout = NO;
@@ -90,10 +133,10 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 }
 
 - (void)setupGestureRecognizer {
-    ADD_GESTURE_RECOGNIZER(self, UITapGestureRecognizer, @selector(onPasterTap:));
-    ADD_GESTURE_RECOGNIZER(self, UIPanGestureRecognizer, @selector(onPasterDrag:));
-    ADD_GESTURE_RECOGNIZER(self, UIPinchGestureRecognizer, @selector(onPasterPinch:));
-    ADD_GESTURE_RECOGNIZER(self, UIRotationGestureRecognizer, @selector(onPasterRotate:));
+    [self addGestureRecognizer:self.pasterTapRecognizer];
+    [self addGestureRecognizer:self.pasterPanRecognizer];
+    [self addGestureRecognizer:self.pasterPinchRecognizer];
+    [self addGestureRecognizer:self.pasterRotationRecognizer];
     self.userInteractionEnabled = YES ;
 }
 
@@ -111,31 +154,52 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 }
 
 - (void)addControls {
-    for(UIView *control in _controlsArray) {
+    for(UIView *border in _borderSet) {
+        [self addSubview:border];
+    }
+    
+    for(UIView *control in _controlsSet) {
         [self addSubview:control];
     }
 }
 
 - (void)removeControls {
-    for(UIView *control in _controlsArray) {
+    for(UIView *border in _borderSet) {
+        [border removeFromSuperview];
+    }
+    
+    for(UIView *control in _controlsSet) {
         [control removeFromSuperview];
     }
 }
 
 - (void)showControls {
     _shouldShowControls = YES;
-    for(UIView *control in _controlsArray) {
+    for(UIView *control in _controlsSet) {
         [control setHidden:NO];
     }
 }
 
 - (void)hideControls {
     _shouldShowControls = NO;
-    for(UIView *control in _controlsArray) {
+    for(UIView *control in _controlsSet) {
         [control setHidden:YES];
     }
 }
 
+- (void)showBorders {
+    _shouldShowBorders = YES;
+    for(UIView *border in _borderSet) {
+        [border setHidden:NO];
+    }
+}
+
+- (void)hideBorders {
+    _shouldShowBorders = NO;
+    for(UIView *border in _borderSet) {
+        [border setHidden:YES];
+    }
+}
 
 #pragma mark getter and setter
 - (UIView *)contentView {
@@ -146,12 +210,30 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         }else if(_text) {
             _contentView = [[UILabel alloc]init];
             ((UILabel *)_contentView).text = _text;
+            ((UILabel *)_contentView).textColor = [UIColor blackColor];
+            ((UILabel *)_contentView).textAlignment = NSTextAlignmentCenter;
+        }else if(_customeView) {
+            _contentView = _customeView;
         }else {
             NSAssert(NO, @"no content for paster");
         }
         _contentView.frame = (CGRect){CGPointZero,_originFrame.size};
     }
     return _contentView;
+}
+
+- (UIImageView *)contentImageView {
+    if(_image&&[_contentView isKindOfClass:[UIImageView class]]) {
+        return (UIImageView *)_contentView;
+    }
+    return nil;
+}
+
+- (UILabel *)contentLabelView {
+    if(_text&&[_contentView isKindOfClass:[UILabel class]]) {
+        return (UILabel *)_contentView;
+    }
+    return nil;
 }
 
 - (UIView *)shadowView {
@@ -241,6 +323,105 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         _leftLine.hidden = !_shouldShowControls;
     }
     return _leftLine;
+}
+
+- (UITapGestureRecognizer *)pasterTapRecognizer {
+    if(!_pasterTapRecognizer) {
+        _pasterTapRecognizer = [[UITapGestureRecognizer alloc]initWithTarget:self action:@selector(onPasterTap:)];
+    }
+    return _pasterTapRecognizer;
+}
+
+- (UIPanGestureRecognizer *)pasterPanRecognizer {
+    if(!_pasterPanRecognizer) {
+        _pasterPanRecognizer = [[UIPanGestureRecognizer alloc]initWithTarget:self action:@selector(onPasterDrag:)];
+    }
+    return _pasterPanRecognizer;
+}
+
+- (UIPinchGestureRecognizer *)pasterPinchRecognizer {
+    if(!_pasterPinchRecognizer) {
+        _pasterPinchRecognizer =[[UIPinchGestureRecognizer alloc]initWithTarget:self action:@selector(onPasterPinch:)];
+    }
+    return _pasterPinchRecognizer;
+}
+
+- (UIRotationGestureRecognizer *)pasterRotationRecognizer {
+    if(!_pasterRotationRecognizer) {
+        _pasterRotationRecognizer = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(onPasterRotate:)];
+    }
+    return _pasterRotationRecognizer;
+}
+
+- (void)setEnableControls:(BOOL)enableControls {
+    if(enableControls == _enableControls) {
+        return;
+    }
+    
+    _enableControls = enableControls;
+    [_controlsSet removeAllObjects];
+    self.enableDeleteControl = enableControls;
+    self.enableScaleControl = enableControls;
+    self.enableRotateControl = enableControls;
+}
+
+#define SET_ENABLE_FOR(enable) \
+if(enable == _##enable) { \
+return; \
+} \
+_##enable = enable; \
+
+#define SET_ENABLE_FOR_CONTROL(enable, view) \
+SET_ENABLE_FOR(enable) \
+if(enable) { \
+[_controlsSet addObject:view]; \
+[self insertSubview:view atIndex:self.subviews.count]; \
+}else { \
+[_controlsSet removeObject:view]; \
+[view removeFromSuperview]; \
+}
+
+#define SET_ENABLE_FOR_GESTURE(enable, recognizer) \
+SET_ENABLE_FOR(enable) \
+if(enable) { \
+[self addGestureRecognizer:recognizer]; \
+}else { \
+[self removeGestureRecognizer:recognizer]; \
+}
+
+- (void)setEnableDeleteControl:(BOOL)enableDeleteControl {
+    SET_ENABLE_FOR_CONTROL(enableDeleteControl, self.deleteControl);
+}
+
+- (void)setEnableScaleControl:(BOOL)enableScaleControl {
+    SET_ENABLE_FOR_CONTROL(enableScaleControl, self.scaleControl);
+}
+
+- (void)setEnableRotateControl:(BOOL)enableRotateControl {
+    SET_ENABLE_FOR_CONTROL(enableRotateControl, self.rotateControl);
+}
+
+- (void)setEnableGesture:(BOOL)enableGesture {
+    if(enableGesture == _enableGesture) {
+        return;
+    }
+    
+    _enableGesture = enableGesture;
+    self.enableDrag = enableGesture;
+    self.enableScale = enableGesture;
+    self.enableRotate = enableGesture;
+}
+
+- (void)setEnableDrag:(BOOL)enableDrag {
+    SET_ENABLE_FOR_GESTURE(enableDrag, self.pasterPanRecognizer);
+}
+
+- (void)setEnableScale:(BOOL)enableScale {
+    SET_ENABLE_FOR_GESTURE(enableScale, self.pasterPinchRecognizer);
+}
+
+- (void)setEnableRotate:(BOOL)enableRotate {
+    SET_ENABLE_FOR_GESTURE(enableRotate, self.pasterRotationRecognizer);
 }
 
 - (UIImageView *)createControlFor:(TYControlType)type {
@@ -377,5 +558,87 @@ logic(); \
         [self updateControls];
         [self.shadowView removeFromSuperview];
     }
+}
+@end
+
+@interface TYPasterManager() <TYPasterViewDelegate>
+
+@property (nonatomic,strong) NSMutableDictionary *pastersDic;
+@property (nonatomic,strong) TYPasterView *currentPaster;
+
+@end
+
+@implementation TYPasterManager
++(instancetype)sharedInstance{
+    static TYPasterManager * instance;
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        instance = [[TYPasterManager alloc]init];
+    });
+    
+    return instance;
+}
+
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        _pastersDic = [[NSMutableDictionary alloc]init];
+    }
+    return self;
+}
+
+- (void)setupPasterView:(TYPasterView *)pasterView{
+    [pasterView setDelegate:self];
+    [self.currentPaster hideControls];
+    self.currentPaster = pasterView;
+    [self.currentPaster showControls];
+    [self.pastersDic setObject:pasterView forKey:pasterView.pasterId];
+}
+
+- (TYPasterView *)pasterWithImage:(UIImage *)image{
+    NSString * pasterId = [NSString stringWithFormat:@"pst_%f",[NSDate date].timeIntervalSince1970];
+    TYPasterView * paster = [[TYPasterView alloc] initWithImage:image
+                                                       pasterId:pasterId];
+    [self setupPasterView:paster];
+    return paster;
+}
+
+- (TYPasterView *)pasterWithText:(NSString *)text {
+    NSString * pasterId = [NSString stringWithFormat:@"pst_%f",[NSDate date].timeIntervalSince1970];
+    TYPasterView * paster = [[TYPasterView alloc] initWithText:text pasterId:pasterId];
+    
+    [self setupPasterView:paster];
+    return paster;
+}
+
+- (TYPasterView *)pasterWithCustomeView:(UIView *)customeView {
+    NSString * pasterId = [NSString stringWithFormat:@"pst_%f",[NSDate date].timeIntervalSince1970];
+    TYPasterView * paster = [[TYPasterView alloc] initWithCustomeView:customeView pasterId:pasterId];
+    
+    [self setupPasterView:paster];
+    return paster;
+}
+
+- (void)deletePasterWithId:(NSString *)pasterId {
+    [self.pastersDic removeObjectForKey:pasterId];
+    if([self.currentPaster.pasterId isEqualToString:pasterId]) {
+        self.currentPaster = nil;
+    }
+}
+
+- (void)clearAll {
+    for (TYPasterView *pasterView in self.pastersDic.allValues) {
+        [pasterView removeFromSuperview];
+    }
+    [self.pastersDic removeAllObjects];
+}
+
+#pragma mark TYPasterViewDelegate
+- (void)typasterViewDidTaped:(TYPasterView *)pasterView {
+    [[pasterView superview] bringSubviewToFront:pasterView];
+    [self.currentPaster hideControls];
+    self.currentPaster = pasterView;
+    [self.currentPaster showControls];
 }
 @end
