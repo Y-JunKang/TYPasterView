@@ -365,28 +365,18 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
     self.enableRotateControl = enableControls;
 }
 
-#define SET_ENABLE_FOR(enable) \
+#define SET_ENABLE_FOR_CONTROL(enable, view) \
 if(enable == _##enable) { \
 return; \
 } \
 _##enable = enable; \
-
-#define SET_ENABLE_FOR_CONTROL(enable, view) \
-SET_ENABLE_FOR(enable) \
 if(enable) { \
 [_controlsSet addObject:view]; \
 [self insertSubview:view atIndex:self.subviews.count]; \
+_enableControls = YES; \
 }else { \
 [_controlsSet removeObject:view]; \
 [view removeFromSuperview]; \
-}
-
-#define SET_ENABLE_FOR_GESTURE(enable, recognizer) \
-SET_ENABLE_FOR(enable) \
-if(enable) { \
-[self addGestureRecognizer:recognizer]; \
-}else { \
-[self removeGestureRecognizer:recognizer]; \
 }
 
 - (void)setEnableDeleteControl:(BOOL)enableDeleteControl {
@@ -410,6 +400,18 @@ if(enable) { \
     self.enableDrag = enableGesture;
     self.enableScale = enableGesture;
     self.enableRotate = enableGesture;
+}
+
+#define SET_ENABLE_FOR_GESTURE(enable, recognizer) \
+if(enable == _##enable) { \
+return; \
+} \
+_##enable = enable; \
+if(enable) { \
+[self addGestureRecognizer:recognizer]; \
+_enableGesture = YES; \
+}else { \
+[self removeGestureRecognizer:recognizer]; \
 }
 
 - (void)setEnableDrag:(BOOL)enableDrag {
