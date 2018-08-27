@@ -9,6 +9,10 @@
 #import <UIKit/UIKit.h>
 
 @class TYPasterView;
+@class TYPasterControl;
+@class TYScaleControl;
+@class TYRotateControl;
+@class TYDeleteControl;
 
 @protocol TYPasterViewDelegate <NSObject>
 
@@ -24,15 +28,11 @@
 @property (nonatomic, strong) UIColor *borderColor;
 @property (nonatomic) CGFloat borderWidth;
 @property (nonatomic) CGFloat controlWidth;
-@property (nonatomic, strong) UIImage *deleteControlIcon;
-@property (nonatomic, strong) UIImage *scaleControlIcon;
-@property (nonatomic, strong) UIImage *rotateControlIcon;
 
-// default is YES
-@property (nonatomic) BOOL enableControls;
-@property (nonatomic) BOOL enableDeleteControl;
-@property (nonatomic) BOOL enableScaleControl;
-@property (nonatomic) BOOL enableRotateControl;
+@property (nonatomic, strong) TYScaleControl *scaleControl;
+@property (nonatomic, strong) TYRotateControl *rotateControl;
+@property (nonatomic, strong) TYDeleteControl *deleteControl;
+
 @property (nonatomic) BOOL enableGesture;
 @property (nonatomic) BOOL enableDrag;
 @property (nonatomic) BOOL enableScale;
@@ -85,6 +85,25 @@
 - (void)hideControls;
 
 /**
+ 在paster上增加一个control
+
+ @param control 自定义control
+ */
+- (void)addControl:(TYPasterControl *)control;
+
+/**
+ 在paster上移除一个control
+
+ @param control control
+ */
+- (void)removeControl:(TYPasterControl *)control;
+
+/**
+ 清空所有control
+ */
+- (void)clearAllControl;
+
+/**
  显示border
  */
 - (void)showBorders;
@@ -132,10 +151,36 @@
  */
 - (void)deletePasterWithId:(NSString *)pasterId;
 
-
 /**
  清空所有paster
  */
 - (void)clearAll;
+@end
+
+@interface TYPasterControl : UIImageView
+
+- (instancetype)initWithPasterView:(TYPasterView *)pasterView;
+
+@end
+
+/**
+ 缩放控制按钮
+ */
+@interface TYScaleControl : TYPasterControl
+
+@end
+
+/**
+ 旋转控制钮
+ */
+@interface TYRotateControl : TYPasterControl
+
+@end
+
+/**
+ 删除控制钮
+ */
+@interface TYDeleteControl : TYPasterControl
+
 @end
 

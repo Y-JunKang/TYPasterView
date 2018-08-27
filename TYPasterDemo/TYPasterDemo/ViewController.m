@@ -7,7 +7,7 @@
 //
 
 #import "ViewController.h"
-#import <TYPaster/TYPasterView.h>
+#import "TYPasterView.h"
 
 @interface ViewController ()
 @property (weak, nonatomic) IBOutlet UISwitch *enableControlsSwitch;
@@ -111,10 +111,11 @@
 }
 
 - (void)setupPasterView:(TYPasterView *)pasterView {
-    pasterView.enableControls = self.enableControlsSwitch.isOn;
-    pasterView.enableDeleteControl = self.enableDeleteControlSwitch.isOn;
-    pasterView.enableScaleControl = self.enableScaleControlSwitch.isOn;
-    pasterView.enableRotateControl = self.enableRotateControlSwitch.isOn;
+    if(!self.enableControlsSwitch.isOn) [pasterView clearAllControl];
+    if(!self.enableDeleteControlSwitch.isOn) [pasterView.deleteControl removeFromSuperview];
+    if(!self.enableScaleControlSwitch.isOn) [pasterView.scaleControl removeFromSuperview];
+    if(!self.enableRotateControlSwitch.isOn) [pasterView.rotateControl removeFromSuperview];
+
     pasterView.enableGesture = self.enableGestureSwitch.isOn;
     pasterView.enableDrag = self.enableDragSwitch.isOn;
     pasterView.enableScale = self.enableScaleSwitch.isOn;

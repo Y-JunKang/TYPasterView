@@ -13,17 +13,13 @@
 [view addGestureRecognizer:[[type alloc]initWithTarget:self \
 action:selector]]
 
-typedef NS_ENUM(NSUInteger,TYControlType) {
-    TYControlTypeScale = 1,
-    TYControlTypeRotate,
-    TYControlTypeDelete
-};
+NSString * const kTYPasterScaleControlIcon = @"TYPasterResource.bundle/scaleControl.png";
+NSString * const kTYPasterRotateControlIcon = @"TYPasterResource.bundle/rotateControl.png";
+NSString * const kTYPasterDeleteControlIcon = @"TYPasterResource.bundle/deleteControl.png";
 
 @interface TYPasterView() {
     UIImage *_image;
     NSString *_text;
-    CGFloat _scale;
-    CGRect _originFrame;
     BOOL _needLayout;
     NSMutableSet *_controlsSet;
     NSMutableSet *_borderSet;
@@ -34,12 +30,11 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 
 @property (nonatomic, weak) id<TYPasterViewDelegate> delegate;
 
-//TODO: 内容view从imageView切换UIView，支持其他view
+@property (nonatomic) CGFloat scale;
+@property (nonatomic) CGRect originFrame;
+
 @property (nonatomic, strong) UIView *contentView;
 @property (nonatomic, strong) UIView *shadowView;
-@property (nonatomic, strong) UIImageView *scaleControl;
-@property (nonatomic, strong) UIImageView *rotateControl;
-@property (nonatomic, strong) UIImageView *deleteControl;
 @property (nonatomic, strong) UIView *topLine, *leftLine, *bottomLine, *rightLine;
 
 @property (nonatomic, strong) UITapGestureRecognizer *pasterTapRecognizer;
@@ -62,11 +57,7 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         _needLayout = YES;
         
         _shouldShowControls = YES;
-        
-        _enableControls = YES;
-        _enableDeleteControl = YES;
-        _enableScaleControl = YES;
-        _enableRotateControl = YES;
+        _shouldShowBorders = YES;
         
         _enableGesture = YES;
         _enableDrag = YES;
@@ -97,7 +88,6 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 - (instancetype)initWithCustomeView:(UIView *)customeView pasterId:(NSString *)pasterId {
     if(self = [self initWithPasterId:pasterId]) {
         _customeView = customeView;
-        _pasterId = pasterId;
     }
     return self;
 }
@@ -112,16 +102,10 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         [_controlsSet addObjectsFromArray:@[self.deleteControl,self.rotateControl,self.scaleControl]];
         [_borderSet addObjectsFromArray:@[self.leftLine,self.topLine,self.rightLine,self.bottomLine]];
         
-        if(!_enableControls) [_controlsSet removeAllObjects];
-        if(!_enableDeleteControl) [_controlsSet removeObject:self.deleteControl];
-        if(!_enableScaleControl) [_controlsSet removeObject:self.scaleControl];
-        if(!_enableRotateControl) [_controlsSet removeObject:self.rotateControl];
-        
         [self addControls];
         
         _needLayout = NO;
-    };
-
+    }
 }
 
 - (BOOL)pointInside:(CGPoint)point withEvent:(UIEvent*)event
@@ -143,9 +127,9 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
 - (void)updateControls {
     CGFloat invertScale = 1 / _scale;
     CGAffineTransform transformControl = CGAffineTransformScale(CGAffineTransformIdentity, invertScale, invertScale);
-    self.scaleControl.transform = transformControl;
-    self.rotateControl.transform = transformControl;
-    self.deleteControl.transform = transformControl;
+    for(TYPasterControl *control in _controlsSet) {
+        control.transform = transformControl;
+    }
     
     self.topLine.transform = CGAffineTransformScale(CGAffineTransformIdentity, 1, invertScale);
     self.leftLine.transform = CGAffineTransformScale(CGAffineTransformIdentity, invertScale, 1);
@@ -153,13 +137,36 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
     self.rightLine.transform = CGAffineTransformScale(CGAffineTransformIdentity, invertScale, 1);
 }
 
+- (void)addControl:(TYPasterControl *)control {
+    [_controlsSet addObject:control];
+    if(!control.superview) {
+        [self addSubview:control];
+    }
+}
+
+- (void)removeControl:(TYPasterControl *)control {
+    [_controlsSet removeObject:control];
+    [control removeFromSuperview];
+}
+
+- (void)clearAllControl {
+    for(UIView *control in _controlsSet) {
+        [control removeFromSuperview];
+    }
+    [_controlsSet removeAllObjects];
+}
+
 - (void)addControls {
     for(UIView *border in _borderSet) {
-        [self addSubview:border];
+        if(!border.superview) {
+            [self addSubview:border];
+        }
     }
     
     for(UIView *control in _controlsSet) {
-        [self addSubview:control];
+        if(!control.superview) {
+            [self addSubview:control];
+        }
     }
 }
 
@@ -245,82 +252,75 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
     return _shadowView;
 }
 
-- (UIImageView *)scaleControl {
+- (TYScaleControl *)scaleControl {
     if(!_scaleControl) {
-        _scaleControl = [self createControlFor:TYControlTypeScale];
+        _scaleControl = [[TYScaleControl alloc]initWithPasterView:self];
         _scaleControl.frame = (CGRect){CGPointZero,CGSizeMake(_controlWidth, _controlWidth)};
         _scaleControl.center = CGPointMake(_originFrame.size.width, _originFrame.size.height);
-        _scaleControl.userInteractionEnabled = YES;
         _scaleControl.hidden = !_shouldShowControls;
-        ADD_GESTURE_RECOGNIZER(_scaleControl, UIPanGestureRecognizer, @selector(onScaleContorlDrag:));
     }
     return _scaleControl;
 }
 
-- (UIImageView *)rotateControl {
+- (TYRotateControl *)rotateControl {
     if(!_rotateControl) {
-        _rotateControl = [self createControlFor:TYControlTypeRotate];
-        _rotateControl.userInteractionEnabled = YES;
+        _rotateControl = [[TYRotateControl alloc]initWithPasterView:self];
         _rotateControl.frame = (CGRect){CGPointZero,CGSizeMake(_controlWidth, _controlWidth)};
         _rotateControl.center = CGPointMake(0, 0);
         _rotateControl.hidden = !_shouldShowControls;
-        ADD_GESTURE_RECOGNIZER(_rotateControl, UIPanGestureRecognizer, @selector(onRotateContorlDrag:));
     }
     return _rotateControl;
 }
 
-- (UIImageView *)deleteControl {
+- (TYDeleteControl *)deleteControl {
     if(!_deleteControl) {
-        _deleteControl = [self createControlFor:TYControlTypeDelete];
-        _deleteControl.userInteractionEnabled = YES;
+        _deleteControl = [[TYDeleteControl alloc]initWithPasterView:self];
         _deleteControl.frame = (CGRect){CGPointZero,CGSizeMake(_controlWidth, _controlWidth)};
         _deleteControl.center = CGPointMake(_originFrame.size.width, 0);
         _deleteControl.hidden = !_shouldShowControls;
-        ADD_GESTURE_RECOGNIZER(_deleteControl, UITapGestureRecognizer, @selector(onPasterDelete:));
     }
     return _deleteControl;
 }
 
+- (UIView *)createLine {
+    UIView *line = [[UIView alloc]init];
+    line.backgroundColor = _borderColor;
+    line.hidden = !_shouldShowBorders;
+    return line;
+}
+
 - (UIView *)topLine {
     if(!_topLine) {
-        _topLine = [[UIView alloc]init];
-        _topLine.backgroundColor = _borderColor;
+        _topLine = [self createLine];
         _topLine.frame = (CGRect){CGPointZero, CGSizeMake(_originFrame.size.width, _borderWidth)};
         _topLine.center = CGPointMake(_originFrame.size.width / 2, 0);
-        _topLine.hidden = !_shouldShowControls;
     }
     return _topLine;
 }
 
 - (UIView *)rightLine {
     if(!_rightLine) {
-        _rightLine = [[UIView alloc]init];
-        _rightLine.backgroundColor = _borderColor;
+        _rightLine = [self createLine];
         _rightLine.frame = (CGRect){CGPointZero, CGSizeMake(_borderWidth, _originFrame.size.height)};
         _rightLine.center = CGPointMake(0, _originFrame.size.height / 2);
-        _rightLine.hidden = !_shouldShowControls;
     }
     return _rightLine;
 }
 
 - (UIView *)bottomLine {
     if(!_bottomLine) {
-        _bottomLine = [[UIView alloc]init];
-        _bottomLine.backgroundColor = _borderColor;
+        _bottomLine = [self createLine];
         _bottomLine.frame = (CGRect){CGPointZero, CGSizeMake(_originFrame.size.width, _borderWidth)};
         _bottomLine.center = CGPointMake(_originFrame.size.width / 2, _originFrame.size.height);
-        _bottomLine.hidden = !_shouldShowControls;
     }
     return _bottomLine;
 }
 
 - (UIView *)leftLine {
     if(!_leftLine) {
-        _leftLine = [[UIView alloc]init];
-        _leftLine.backgroundColor = _borderColor;
+        _leftLine = [self createLine];
         _leftLine.frame = (CGRect){CGPointZero, CGSizeMake(_borderWidth, _originFrame.size.height)};
         _leftLine.center = CGPointMake(_originFrame.size.width, _originFrame.size.height / 2);
-        _leftLine.hidden = !_shouldShowControls;
     }
     return _leftLine;
 }
@@ -351,44 +351,6 @@ typedef NS_ENUM(NSUInteger,TYControlType) {
         _pasterRotationRecognizer = [[UIRotationGestureRecognizer alloc]initWithTarget:self action:@selector(onPasterRotate:)];
     }
     return _pasterRotationRecognizer;
-}
-
-- (void)setEnableControls:(BOOL)enableControls {
-    if(enableControls == _enableControls) {
-        return;
-    }
-    
-    _enableControls = enableControls;
-    [_controlsSet removeAllObjects];
-    self.enableDeleteControl = enableControls;
-    self.enableScaleControl = enableControls;
-    self.enableRotateControl = enableControls;
-}
-
-#define SET_ENABLE_FOR_CONTROL(enable, view) \
-if(enable == _##enable) { \
-return; \
-} \
-_##enable = enable; \
-if(enable) { \
-[_controlsSet addObject:view]; \
-[self insertSubview:view atIndex:self.subviews.count]; \
-_enableControls = YES; \
-}else { \
-[_controlsSet removeObject:view]; \
-[view removeFromSuperview]; \
-}
-
-- (void)setEnableDeleteControl:(BOOL)enableDeleteControl {
-    SET_ENABLE_FOR_CONTROL(enableDeleteControl, self.deleteControl);
-}
-
-- (void)setEnableScaleControl:(BOOL)enableScaleControl {
-    SET_ENABLE_FOR_CONTROL(enableScaleControl, self.scaleControl);
-}
-
-- (void)setEnableRotateControl:(BOOL)enableRotateControl {
-    SET_ENABLE_FOR_CONTROL(enableRotateControl, self.rotateControl);
 }
 
 - (void)setEnableGesture:(BOOL)enableGesture {
@@ -424,26 +386,6 @@ _enableGesture = YES; \
 
 - (void)setEnableRotate:(BOOL)enableRotate {
     SET_ENABLE_FOR_GESTURE(enableRotate, self.pasterRotationRecognizer);
-}
-
-- (UIImageView *)createControlFor:(TYControlType)type {
-    UIImageView * control = [[UIImageView alloc]init];
-    control.backgroundColor = [UIColor clearColor];
-    NSString *iconName = [NSString stringWithFormat:@"TYPasterResource.bundle/controlIcon_%lu",(unsigned long)type];
-    UIImage *image = [UIImage imageNamed:iconName];
-    switch (type) {
-        case TYControlTypeScale:
-            image = _scaleControlIcon?:image;
-            break;
-        case TYControlTypeDelete:
-            image = _deleteControlIcon?:image;
-            break;
-        case TYControlTypeRotate:
-            image = _rotateControlIcon?:image;
-            break;
-    }
-    control.image = image;
-    return control;
 }
 
 #pragma mark action sendder
@@ -500,66 +442,6 @@ logic(); \
         gesture.rotation = 0.0;
     };
     TY_PASTER_GESTURE_RECOGNIZER_LOGIC(block);
-}
-
-- (void)onPasterDelete:(UITapGestureRecognizer *)gesture {
-    [[TYPasterManager sharedInstance] deletePasterWithId:_pasterId];
-    [self removeFromSuperview];
-}
-
-- (void)onScaleContorlDrag:(UIPanGestureRecognizer *)gesture {
-    if(gesture.state == UIGestureRecognizerStateBegan) {
-        self.shadowView.transform = self.transform;
-        [self.delegate typasterViewDidTaped:self];
-        [self.superview addSubview:self.shadowView];
-    }else if(gesture.state == UIGestureRecognizerStateChanged) {
-        CGPoint offset = [gesture translationInView:self.superview];
-        CGFloat width = _originFrame.size.width;
-        CGFloat height = _originFrame.size.height;
-        CGFloat cosAngle = width / hypot(width, height);
-        
-        CGFloat originLen = hypot(width, height) / 2;
-        CGFloat offsetLen = offset.x / cosAngle;
-        CGFloat scale = 1 + offsetLen / originLen;
-        _scale *= scale;
-        self.shadowView.transform = CGAffineTransformScale(self.shadowView.transform, scale, scale);
-        [gesture setTranslation:CGPointZero inView:self.superview];
-    }else if(gesture.state == UIGestureRecognizerStateEnded) {
-        self.transform = self.shadowView.transform;
-        [self updateControls];
-        [self.shadowView removeFromSuperview];
-    }
-}
-
-- (void)onRotateContorlDrag:(UIPanGestureRecognizer *)gesture {
-    if(gesture.state == UIGestureRecognizerStateBegan) {
-        self.shadowView.transform = self.transform;
-        [self.delegate typasterViewDidTaped:self];
-        [self.superview addSubview:self.shadowView];
-    }else if(gesture.state == UIGestureRecognizerStateChanged) {
-        CGPoint offset = [gesture translationInView:self.superview];
-        CGFloat width = _originFrame.size.width;
-        CGFloat height = _originFrame.size.height;
-        CGFloat angle = hypot(offset.x, offset.y);
-        angle /= hypot(width, height);
-        CGPoint location = [gesture locationInView:self.superview];
-        CGPoint center = self.center;
-        
-        if((location.x - center.x) * offset.y < 0 ) {
-            angle = -angle;
-        }
-        
-        if(offset.x * offset.y == 0) {
-            angle = 0;
-        }
-    
-        self.shadowView.transform = CGAffineTransformRotate(self.shadowView.transform, angle);
-        [gesture setTranslation:CGPointZero inView:self.superview];
-    }else if(gesture.state == UIGestureRecognizerStateEnded) {
-        self.transform = self.shadowView.transform;
-        [self updateControls];
-        [self.shadowView removeFromSuperview];
-    }
 }
 @end
 
@@ -623,6 +505,8 @@ logic(); \
 }
 
 - (void)deletePasterWithId:(NSString *)pasterId {
+    TYPasterView *pasterView = self.pastersDic[pasterId];
+    [pasterView removeFromSuperview];
     [self.pastersDic removeObjectForKey:pasterId];
     if([self.currentPaster.pasterId isEqualToString:pasterId]) {
         self.currentPaster = nil;
@@ -644,3 +528,122 @@ logic(); \
     [self.currentPaster showControls];
 }
 @end
+
+
+@interface TYPasterControl()
+
+@property (nonatomic, weak) TYPasterView *pasterView;
+
+@end
+
+@implementation TYPasterControl
+
+- (instancetype)initWithPasterView:(TYPasterView *)pasterView {
+    self = [super init];
+    if (self) {
+        self.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = YES;
+        _pasterView = pasterView;
+    }
+    return self;
+}
+
+@end
+
+@implementation TYScaleControl
+
+- (instancetype)initWithPasterView:(TYPasterView *)pasterView {
+    self = [super initWithPasterView:pasterView];
+    if (self) {
+        self.image = [UIImage imageNamed:kTYPasterScaleControlIcon];
+        ADD_GESTURE_RECOGNIZER(self, UIPanGestureRecognizer, @selector(onScaleControlDrag:));
+    }
+    return self;
+}
+
+- (void)onScaleControlDrag:(UIPanGestureRecognizer *)gesture {
+    if(gesture.state == UIGestureRecognizerStateBegan) {
+        self.pasterView.shadowView.transform = self.pasterView.transform;
+        [self.pasterView.superview addSubview:self.pasterView.shadowView];
+    }else if(gesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint offset = [gesture translationInView:self.pasterView.superview];
+        CGFloat width = self.pasterView.originFrame.size.width;
+        CGFloat height = self.pasterView.originFrame.size.height;
+        CGFloat cosAngle = width / hypot(width, height);
+        
+        CGFloat originLen = hypot(width, height) / 2;
+        CGFloat offsetLen = offset.x / cosAngle;
+        CGFloat scale = 1 + offsetLen / originLen;
+        self.pasterView.scale *= scale;
+        self.pasterView.shadowView.transform = CGAffineTransformScale(self.pasterView.shadowView.transform, scale, scale);
+        [gesture setTranslation:CGPointZero inView:self.pasterView.superview];
+    }else if(gesture.state == UIGestureRecognizerStateEnded) {
+        self.pasterView.transform = self.pasterView.shadowView.transform;
+        [self.pasterView updateControls];
+        [self.pasterView.shadowView removeFromSuperview];
+    }
+}
+
+@end
+
+@implementation TYRotateControl
+
+- (instancetype)initWithPasterView:(TYPasterView *)pasterView {
+    self = [super initWithPasterView:pasterView];
+    if (self) {
+        self.image = [UIImage imageNamed:kTYPasterRotateControlIcon];
+        ADD_GESTURE_RECOGNIZER(self, UIPanGestureRecognizer, @selector(onRotateControlDrag:));
+    }
+    return self;
+}
+
+- (void)onRotateControlDrag:(UIPanGestureRecognizer *)gesture {
+    if(gesture.state == UIGestureRecognizerStateBegan) {
+        self.pasterView.shadowView.transform = self.pasterView.transform;
+        [self.pasterView.superview addSubview:self.pasterView.shadowView];
+    }else if(gesture.state == UIGestureRecognizerStateChanged) {
+        CGPoint offset = [gesture translationInView:self.pasterView.superview];
+        CGFloat width = self.pasterView.originFrame.size.width;
+        CGFloat height = self.pasterView.originFrame.size.height;
+        CGFloat angle = hypot(offset.x, offset.y);
+        angle /= hypot(width, height);
+        CGPoint location = [gesture locationInView:self.pasterView.superview];
+        CGPoint center = self.pasterView.center;
+        
+        if((location.x - center.x) * offset.y < 0 ) {
+            angle = -angle;
+        }
+        
+        if(offset.x * offset.y == 0) {
+            angle = 0;
+        }
+        
+        self.pasterView.shadowView.transform = CGAffineTransformRotate(self.pasterView.shadowView.transform, angle);
+        [gesture setTranslation:CGPointZero inView:self.pasterView.superview];
+    }else if(gesture.state == UIGestureRecognizerStateEnded) {
+        self.pasterView.transform = self.pasterView.shadowView.transform;
+        [self.pasterView updateControls];
+        [self.pasterView.shadowView removeFromSuperview];
+    }
+}
+
+@end
+
+@implementation TYDeleteControl
+
+- (instancetype)initWithPasterView:(TYPasterView *)pasterView
+{
+    self = [super initWithPasterView:pasterView];
+    if (self) {
+        self.image = [UIImage imageNamed:@"TYPasterResource.bundle/deleteControl"];
+        ADD_GESTURE_RECOGNIZER(self, UIPanGestureRecognizer, @selector(onDeleteControlTap:));
+    }
+    return self;
+}
+
+- (void)onDeleteControlTap:(UITapGestureRecognizer *)gesture {
+    [[TYPasterManager sharedInstance] deletePasterWithId:self.pasterView.pasterId];
+}
+
+@end
+

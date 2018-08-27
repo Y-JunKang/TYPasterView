@@ -8,7 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		EE37E928213139B600730024 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EE37E927213139B600730024 /* Main.storyboard */; };
-		EE37E94D2131603300730024 /* TYPaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = EE37E94C2131603300730024 /* TYPaster.framework */; };
+		EE3A157721345F8900CA44EF /* TYPasterView.m in Sources */ = {isa = PBXBuildFile; fileRef = EE3A157521345F8900CA44EF /* TYPasterView.m */; };
+		EE3A157821345F8900CA44EF /* TYPasterResource.bundle in Resources */ = {isa = PBXBuildFile; fileRef = EE3A157621345F8900CA44EF /* TYPasterResource.bundle */; };
 		EEF8FA362116B5BF00D9DDB8 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */; };
 		EEF8FA392116B5BF00D9DDB8 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = EEF8FA382116B5BF00D9DDB8 /* ViewController.m */; };
 		EEF8FA3E2116B5C100D9DDB8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EEF8FA3D2116B5C100D9DDB8 /* Assets.xcassets */; };
@@ -19,6 +20,9 @@
 /* Begin PBXFileReference section */
 		EE37E927213139B600730024 /* Main.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		EE37E94C2131603300730024 /* TYPaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = TYPaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		EE3A157421345F8800CA44EF /* TYPasterView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TYPasterView.h; sourceTree = "<group>"; };
+		EE3A157521345F8900CA44EF /* TYPasterView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TYPasterView.m; sourceTree = "<group>"; };
+		EE3A157621345F8900CA44EF /* TYPasterResource.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = TYPasterResource.bundle; sourceTree = "<group>"; };
 		EEF8FA312116B5BF00D9DDB8 /* TYPasterDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TYPasterDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EEF8FA342116B5BF00D9DDB8 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -35,7 +39,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EE37E94D2131603300730024 /* TYPaster.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -48,6 +51,16 @@
 				EE37E94C2131603300730024 /* TYPaster.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		EE3A157321345F7A00CA44EF /* TYPaster */ = {
+			isa = PBXGroup;
+			children = (
+				EE3A157621345F8900CA44EF /* TYPasterResource.bundle */,
+				EE3A157421345F8800CA44EF /* TYPasterView.h */,
+				EE3A157521345F8900CA44EF /* TYPasterView.m */,
+			);
+			path = TYPaster;
 			sourceTree = "<group>";
 		};
 		EEF8FA282116B5BF00D9DDB8 = {
@@ -70,6 +83,7 @@
 		EEF8FA332116B5BF00D9DDB8 /* TYPasterDemo */ = {
 			isa = PBXGroup;
 			children = (
+				EE3A157321345F7A00CA44EF /* TYPaster */,
 				EEF8FA342116B5BF00D9DDB8 /* AppDelegate.h */,
 				EEF8FA352116B5BF00D9DDB8 /* AppDelegate.m */,
 				EEF8FA372116B5BF00D9DDB8 /* ViewController.h */,
@@ -143,6 +157,7 @@
 				EEF8FA412116B5C100D9DDB8 /* LaunchScreen.storyboard in Resources */,
 				EE37E928213139B600730024 /* Main.storyboard in Resources */,
 				EEF8FA3E2116B5C100D9DDB8 /* Assets.xcassets in Resources */,
+				EE3A157821345F8900CA44EF /* TYPasterResource.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -153,6 +168,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				EE3A157721345F8900CA44EF /* TYPasterView.m in Sources */,
 				EEF8FA392116B5BF00D9DDB8 /* ViewController.m in Sources */,
 				EEF8FA442116B5C100D9DDB8 /* main.m in Sources */,
 				EEF8FA362116B5BF00D9DDB8 /* AppDelegate.m in Sources */,
