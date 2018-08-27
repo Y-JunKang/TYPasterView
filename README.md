@@ -10,6 +10,8 @@
 
 ## 使用
 
+将TYPaster文件夹拖进工程中，并在需要使用的文件内`#import "TYPasterView.h"`，以下为简单的代码示例。
+
 ``` objective-c
 // 图片
 UIImage *image = [UIImage imageNamed:@"imageName"];
